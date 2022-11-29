@@ -2,13 +2,13 @@ const express = require("express");
 const morgan = require("morgan");
 const cors = require('cors')
 const app = express();
-const PORT = process.env.port || 3001;
+const PORT = process.env.port || 3002;
 
 
 const noteRouter = require("./routes/notes.js");
 
 const corsOptions = {
-  origin: 'http://localhost:3000',
+  origin: 'http://localhost:3001',
   optionsSuccessStatus: 200
 };
 
