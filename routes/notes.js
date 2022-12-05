@@ -11,17 +11,15 @@ codeRouter.get("/", async function (req, res) {
 });
 
 codeRouter.post("/", async function (req, res) {
-    const noteContent = req.body.content;
+    const noteContent = req.body;
     const note = await addNote(noteContent);
 
     res.json({ success: true, payload: note });
 });
 
 codeRouter.delete("/:id", async function (req, res) {
-    const id = req.params.id;
-    await deleteNote(id);
-
-    res.json({ success: true });
+    const deleted = await deleteNote(req.params.id);
+    res.json({ success: true, payload: deleted });
 });
 
 export default codeRouter;

@@ -9,18 +9,17 @@ export async function getNotes() {
     }));
 }
 
-export async function addNote(content) {
-    const time = Date.now();
-    const req = await pool.query(`INSERT INTO notes (time, content) VALUES (${time}, '${content}') RETURNING id;`);
+export async function addNote(newContent) {
+    const sqlQuery = "INSERT INTO notes (content) VALUES ($1)  RETURNING *;";
+    const param = [newContent.content];
+    const result = await pool.query(sqlQuery, param);
+    const created = result.rows[0]
+    return created
+}   
 
-    return {
-        id: req.rows[0].id,
-        time,
-        content,
-    };
-}
-
-export async function deleteNote(id) {
-    await pool.query(`DELETE FROM notes WHERE id = ${id};`);
+export async function deleteNote(deleteId) {
+    const result = await pool.query("DELETE FROM notes WHERE id = ($1) RETURNING*;", [deleteId]);
+    const deleted = result.rows[0];
+    return deleted
 }
 
