@@ -1,7 +1,7 @@
-const { query } = require("../db/index.js");
+import { pool } from "../db/index.js"; 
 
-async function getNotes() {
-    const result = await query("SELECT * FROM notes;")
+export async function getNotes() {
+    const result = await pool.query("SELECT * FROM notes;")
     const notesArray = result.rows;
     return notesArray.map(note => ({
         ...note,
@@ -9,9 +9,9 @@ async function getNotes() {
     }));
 }
 
-async function addNote(content) {
+export async function addNote(content) {
     const time = Date.now();
-    const req = await query(`INSERT INTO notes (time, content) VALUES (${time}, '${content}') RETURNING id;`);
+    const req = await pool.query(`INSERT INTO notes (time, content) VALUES (${time}, '${content}') RETURNING id;`);
 
     return {
         id: req.rows[0].id,
@@ -20,12 +20,7 @@ async function addNote(content) {
     };
 }
 
-async function deleteNote(id) {
-    await query(`DELETE FROM notes WHERE id = ${id};`);
+export async function deleteNote(id) {
+    await pool.query(`DELETE FROM notes WHERE id = ${id};`);
 }
 
-module.exports = {
-    getNotes,
-    addNote,
-    deleteNote,
-};

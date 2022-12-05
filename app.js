@@ -1,20 +1,15 @@
-const express = require("express");
-const morgan = require("morgan");
-const cors = require('cors')
+import express from 'express'
+import logger from 'morgan'
+import cors from 'cors'
+import codeRouter from './routes/notes.js'
+
 const app = express();
-const PORT = process.env.port || 3001;
-
-
-const noteRouter = require("./routes/notes.js");
-
+const PORT = process.env.PORT || 3001;
 
 app.use(cors());
-
-app.use(morgan("dev"));
-app.use(express.static("public"));
+app.use(logger("dev"));
 app.use(express.json());
-
-app.use("/api/notes", noteRouter);
+app.use("/api/notes", codeRouter);
 
 app.listen(PORT, function () {
   console.log(`Server is running on port ${PORT}`);
