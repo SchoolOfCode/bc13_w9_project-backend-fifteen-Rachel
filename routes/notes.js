@@ -6,14 +6,12 @@ const codeRouter = express.Router();
 
 codeRouter.get("/", async function (req, res) {
     const notes = await getNotes();
-
     res.json({ success: true, payload: notes });
 });
 
 codeRouter.post("/", async function (req, res) {
     const noteContent = req.body;
     const note = await addNote(noteContent);
-
     res.json({ success: true, payload: note });
 });
 
