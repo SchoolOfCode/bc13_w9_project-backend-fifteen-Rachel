@@ -1,5 +1,5 @@
 import express from "express";
-import { getNotes, addNote, deleteNote } from "../models/notes.js"
+import { getNotes, addNote, deleteNote, editNote } from "../models/notes.js"
 
 
 const codeRouter = express.Router();
@@ -18,6 +18,12 @@ codeRouter.post("/", async function (req, res) {
 codeRouter.delete("/:id", async function (req, res) {
     const deleted = await deleteNote(req.params.id);
     res.json({ success: true, payload: deleted });
+});
+
+codeRouter.patch("/:id", async function (req, res) {
+    console.log(req.body)
+    const edit = await editNote(req.body, req.params.id);
+    res.json({ success: true, payload: edit });
 });
 
 export default codeRouter;
