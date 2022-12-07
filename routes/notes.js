@@ -21,7 +21,6 @@ codeRouter.delete("/:id", async function (req, res) {
 });
 
 codeRouter.patch("/:id", async function (req, res) {
-    console.log(req.body)
     const edit = await editNote(req.body, req.params.id);
     res.json({ success: true, payload: edit });
 });

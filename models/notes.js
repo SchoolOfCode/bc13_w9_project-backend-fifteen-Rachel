@@ -16,9 +16,7 @@ export async function deleteNote(deleteId) {
 }
 
 export async function editNote(editContent, editID) {
-    console.log(editContent.content);
     const result = await pool.query("UPDATE notes SET content = ($1) WHERE id = ($2) RETURNING *;", [editContent.content, editID]);
-    console.log(result.rows);
-    return result.rows;
+    return result.rows[0];
 }
 
